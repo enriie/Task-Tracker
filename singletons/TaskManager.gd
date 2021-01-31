@@ -48,9 +48,28 @@ func create_task(t_name : String, t_type : int, t_checked : bool, t_checked_date
 	id_counter += 1
 	pass
 
-func edit_task(t_task, new_t_name : String, new_t_type : int):
+func edit_task(t_mtask, new_t_name : String, new_t_type : int):
+	var t_task = null
+	for t in tasks:
+		if t.id == t_mtask.id:
+			t_task = t
+	
+	t_mtask.update_task(new_t_name, new_t_type)
 	t_task.update_task(new_t_name, new_t_type)
-	pass
+	
+	var parent = t_task.get_parent()
+	parent.remove_child(t_task)
+	match new_t_type:
+		Ref.TASK_TYPE.DAILY:
+			daily_tasks.add_child(t_task)
+		Ref.TASK_TYPE.WEEKLY:
+			weekly_tasks.add_child(t_task)
+		Ref.TASK_TYPE.MONTHLY:
+			monthly_tasks.add_child(t_task)
+		Ref.TASK_TYPE.ONE_TIME:
+			one_time_tasks.add_child(t_task)
+		_:
+			printerr("Invalid Task Type was passed in [%s]" % new_t_type)
 
 func delete_task(mt):
 	for t in tasks:

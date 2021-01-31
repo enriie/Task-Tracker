@@ -28,6 +28,12 @@ func init(t_name : String, t_type : int, t_id :int, t_checked : bool, t_checked_
 	$margin_container/hbox/label_task.text = t_name
 	pass
 
+func update_task(new_name : String, new_type : int):
+	task_name = new_name
+	type = new_type
+	
+	$margin_container/hbox/label_task.text = new_name
+
 func _on_check_box_pressed():
 	if $margin_container/hbox/check_box.pressed:
 		$utils/animator.queue("finished")

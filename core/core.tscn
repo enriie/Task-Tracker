@@ -486,7 +486,7 @@ text = "M"
 margin_left = 164.0
 margin_right = 187.0
 margin_bottom = 20.0
-hint_tooltip = "Sets the filter to show only Monthly Tasks"
+hint_tooltip = "Sets the filter to show only One Time Tasks"
 text = "O"
 
 [node name="label_current_filter" type="Label" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]

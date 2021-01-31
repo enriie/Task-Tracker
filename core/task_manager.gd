@@ -19,10 +19,9 @@ func _ready():
 	filter = Ref.MANAGER_FILTERS.ALL
 	
 	TaskManager.daily_tasks = get_node("../main/main_body/tab_container/Daily/scroll_container/task_box")
-	TaskManager.weekly_tasks = get_node("../main/main_body/tab_container/Daily/scroll_container/task_box")
+	TaskManager.weekly_tasks = get_node("../main/main_body/tab_container/Weekly/scroll_container/task_box")
 	TaskManager.monthly_tasks = get_node("../main/main_body/tab_container/Monthly/scroll_container/task_box")
 	TaskManager.one_time_tasks = get_node("../main/main_body/tab_container/One Time/scroll_container/task_box")
-
 	
 	TaskManager.task_box = get_node("main_body/task_view/task_view_body/task_container/task_box")
 	TaskManager.task_manager = self

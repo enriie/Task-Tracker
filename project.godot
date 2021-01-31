@@ -1,0 +1,38 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[  ]
+_global_script_class_icons={
+
+}
+
+[application]
+
+config/name="Task Tracker"
+run/main_scene="res://core/core.tscn"
+boot_splash/bg_color=Color( 0.117647, 0.109804, 0.141176, 1 )
+config/icon="res://tracker_icon_v2.png"
+
+[autoload]
+
+Ref="*res://singletons/Ref.gd"
+TaskManager="*res://singletons/TaskManager.gd"
+
+[display]
+
+window/size/width=320
+window/size/height=480
+window/size/resizable=false
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

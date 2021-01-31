@@ -1,0 +1,520 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://core/core.gd" type="Script" id=1]
+[ext_resource path="res://core/task_manager.gd" type="Script" id=3]
+[ext_resource path="res://core/main.gd" type="Script" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "to_managment"
+tracks/0/type = "value"
+tracks/0/path = NodePath("../task_manager:rect_position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 0.45, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -512 ), Vector2( 0, -512 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../main:rect_position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1.46409, 0.148651 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 512 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "to_tasks"
+tracks/0/type = "value"
+tracks/0/path = NodePath("../task_manager:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7, 1 ),
+"transitions": PoolRealArray( 0.75, 1.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -512 ), Vector2( 0, -512 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../main:rect_position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.75, 2 ),
+"update": 0,
+"values": [ Vector2( 0, 512 ), Vector2( 0, 0 ) ]
+}
+
+[node name="core" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.117647, 0.109804, 0.141176, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="main" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 512.0
+margin_bottom = 511.999
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="main_body" type="VBoxContainer" parent="main"]
+anchor_left = 0.025
+anchor_top = 0.0166667
+anchor_right = 0.975
+anchor_bottom = 0.983335
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="buttons" type="HBoxContainer" parent="main/main_body"]
+margin_right = 304.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="button_manage_tasks" type="Button" parent="main/main_body/buttons"]
+margin_right = 304.0
+margin_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "Manage Tasks"
+
+[node name="tab_container" type="TabContainer" parent="main/main_body"]
+margin_top = 40.0
+margin_right = 304.0
+margin_bottom = 464.0
+rect_min_size = Vector2( 250, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Daily" type="Tabs" parent="main/main_body/tab_container"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="background" type="ColorRect" parent="main/main_body/tab_container/Daily"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.14902, 0.137255, 0.180392, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scroll_container" type="ScrollContainer" parent="main/main_body/tab_container/Daily"]
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.98
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="task_box" type="VBoxContainer" parent="main/main_body/tab_container/Daily/scroll_container"]
+margin_right = 284.16
+margin_bottom = 14.0
+size_flags_horizontal = 3
+custom_constants/separation = 2
+
+[node name="label_no_tasks" type="Label" parent="main/main_body/tab_container/Daily/scroll_container/task_box"]
+margin_right = 284.0
+margin_bottom = 14.0
+text = "You have no tasks for today"
+align = 1
+valign = 1
+
+[node name="Weekly" type="Tabs" parent="main/main_body/tab_container"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="background" type="ColorRect" parent="main/main_body/tab_container/Weekly"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.14902, 0.137255, 0.180392, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scroll_container" type="ScrollContainer" parent="main/main_body/tab_container/Weekly"]
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.98
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="task_box" type="VBoxContainer" parent="main/main_body/tab_container/Weekly/scroll_container"]
+margin_right = 284.16
+margin_bottom = 14.0
+size_flags_horizontal = 3
+custom_constants/separation = 2
+
+[node name="label_no_tasks" type="Label" parent="main/main_body/tab_container/Weekly/scroll_container/task_box"]
+margin_right = 284.0
+margin_bottom = 14.0
+text = "You have no weekly tasks"
+align = 1
+valign = 1
+
+[node name="Monthly" type="Tabs" parent="main/main_body/tab_container"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="background" type="ColorRect" parent="main/main_body/tab_container/Monthly"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.14902, 0.137255, 0.180392, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scroll_container" type="ScrollContainer" parent="main/main_body/tab_container/Monthly"]
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.98
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="task_box" type="VBoxContainer" parent="main/main_body/tab_container/Monthly/scroll_container"]
+margin_right = 284.16
+margin_bottom = 14.0
+size_flags_horizontal = 3
+custom_constants/separation = 2
+
+[node name="label_no_tasks" type="Label" parent="main/main_body/tab_container/Monthly/scroll_container/task_box"]
+margin_right = 284.0
+margin_bottom = 14.0
+text = "You have no monthly tasks"
+align = 1
+valign = 1
+
+[node name="One Time" type="Tabs" parent="main/main_body/tab_container"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="background" type="ColorRect" parent="main/main_body/tab_container/One Time"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.14902, 0.137255, 0.180392, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scroll_container" type="ScrollContainer" parent="main/main_body/tab_container/One Time"]
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.98
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="task_box" type="VBoxContainer" parent="main/main_body/tab_container/One Time/scroll_container"]
+margin_right = 284.16
+margin_bottom = 14.0
+size_flags_horizontal = 3
+custom_constants/separation = 2
+
+[node name="label_no_tasks" type="Label" parent="main/main_body/tab_container/One Time/scroll_container/task_box"]
+margin_right = 284.0
+margin_bottom = 14.0
+text = "There are no tasks"
+align = 1
+valign = 1
+
+[node name="task_manager" type="Control" parent="."]
+anchor_top = -1.06667
+anchor_right = 1.0
+anchor_bottom = -0.0666667
+margin_top = 512.002
+margin_bottom = 512.002
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="main_body" type="VBoxContainer" parent="task_manager"]
+anchor_left = 0.025
+anchor_top = 0.0166666
+anchor_right = 0.975
+anchor_bottom = 0.98333
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="task_editing" type="Control" parent="task_manager/main_body"]
+margin_right = 304.0
+margin_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 120, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="v_managment_body" type="VBoxContainer" parent="task_manager/main_body/task_editing"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="h_input_body" type="HBoxContainer" parent="task_manager/main_body/task_editing/v_managment_body"]
+margin_right = 304.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="task_renaming" type="LineEdit" parent="task_manager/main_body/task_editing/v_managment_body/h_input_body"]
+margin_right = 224.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="v_seperator" type="VSeparator" parent="task_manager/main_body/task_editing/v_managment_body/h_input_body"]
+margin_left = 228.0
+margin_right = 232.0
+margin_bottom = 32.0
+
+[node name="button_confirm" type="Button" parent="task_manager/main_body/task_editing/v_managment_body/h_input_body"]
+margin_left = 236.0
+margin_right = 268.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+text = "C"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="button_cancel" type="Button" parent="task_manager/main_body/task_editing/v_managment_body/h_input_body"]
+margin_left = 272.0
+margin_right = 304.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="options_task_type" type="OptionButton" parent="task_manager/main_body/task_editing/v_managment_body"]
+margin_top = 40.0
+margin_right = 304.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+text = "Daily"
+items = [ "Daily", null, false, 0, null, "Weekly", null, false, 1, null, "Monthly", null, false, 2, null, "One Time", null, false, 3, null ]
+selected = 0
+
+[node name="label_current_selection" type="Label" parent="task_manager/main_body"]
+margin_top = 68.0
+margin_right = 304.0
+margin_bottom = 82.0
+text = "Selected Task: {selection}"
+
+[node name="HSeparator" type="HSeparator" parent="task_manager/main_body"]
+margin_top = 86.0
+margin_right = 304.0
+margin_bottom = 90.0
+
+[node name="task_view" type="Control" parent="task_manager/main_body"]
+margin_top = 94.0
+margin_right = 304.0
+margin_bottom = 440.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="task_view_body" type="VBoxContainer" parent="task_manager/main_body/task_view"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="buttons_filter" type="HBoxContainer" parent="task_manager/main_body/task_view/task_view_body"]
+margin_right = 304.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="label_filter" type="Label" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]
+margin_top = 3.0
+margin_right = 44.0
+margin_bottom = 17.0
+text = "Filters:"
+valign = 1
+max_lines_visible = 1
+
+[node name="button_all" type="Button" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]
+margin_left = 48.0
+margin_right = 77.0
+margin_bottom = 20.0
+hint_tooltip = "Sets the filter to show All Tasks"
+text = "All"
+
+[node name="button_daily" type="Button" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]
+margin_left = 81.0
+margin_right = 103.0
+margin_bottom = 20.0
+hint_tooltip = "Sets the filter to show only Daily Tasks"
+text = "D"
+
+[node name="button_weekly" type="Button" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]
+margin_left = 107.0
+margin_right = 132.0
+margin_bottom = 20.0
+hint_tooltip = "Sets the filter to show only Weekly Tasks"
+text = "W"
+
+[node name="button_monthly" type="Button" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]
+margin_left = 136.0
+margin_right = 160.0
+margin_bottom = 20.0
+hint_tooltip = "Sets the filter to show only Monthly Tasks"
+text = "M"
+
+[node name="label_curr_filter" type="Label" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]
+margin_left = 164.0
+margin_top = 3.0
+margin_right = 304.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Current Filter: {f}"
+align = 2
+valign = 1
+max_lines_visible = 1
+
+[node name="task_container" type="ScrollContainer" parent="task_manager/main_body/task_view/task_view_body"]
+margin_top = 24.0
+margin_right = 304.0
+margin_bottom = 346.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="task_box" type="VBoxContainer" parent="task_manager/main_body/task_view/task_view_body/task_container"]
+margin_right = 304.0
+size_flags_horizontal = 3
+
+[node name="button_back" type="Button" parent="task_manager/main_body"]
+margin_top = 444.0
+margin_right = 304.0
+margin_bottom = 464.0
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="utils" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="animator" type="AnimationPlayer" parent="utils"]
+anims/to_managment = SubResource( 1 )
+anims/to_tasks = SubResource( 2 )
+[connection signal="pressed" from="main/main_body/buttons/button_manage_tasks" to="." method="_on_button_manage_tasks_pressed"]
+[connection signal="button_up" from="task_manager/main_body/task_editing/v_managment_body/h_input_body/button_confirm" to="task_manager" method="_on_button_confirm_button_up"]
+[connection signal="button_down" from="task_manager/main_body/task_editing/v_managment_body/h_input_body/button_cancel" to="task_manager" method="_on_button_cancel_button_down"]
+[connection signal="button_down" from="task_manager/main_body/button_back" to="." method="_on_Button_button_down"]

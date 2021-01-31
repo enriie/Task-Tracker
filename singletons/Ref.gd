@@ -1,0 +1,3 @@
+extends Node
+
+enum TASK_TYPE { DAILY, WEEKLY, MONTHLY, ONE_TIME }

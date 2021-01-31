@@ -8,24 +8,30 @@ var weekly_tasks
 var monthly_tasks
 var one_time_tasks
 
+var task_box
 var task_manager
 
-var managment_tasks = []
+var tasks = []
+
+var id_counter = 0
 
 func _ready():
 	pass
 
-func create_task(t_name : String, t_type : int):
+func create_task(t_name : String, t_type : int, t_checked : bool, t_checked_date : Dictionary, forced_id = -1, force_id = false):
 	var i_mtask = managment_task.instance()
 	var i_task = task.instance()
 	
-	i_mtask.init(t_name, t_type)
-	i_task.init(t_name, t_type)
+	if force_id:
+		i_mtask.init(t_name, t_type, int(forced_id))
+		i_task.init(t_name, t_type, int(forced_id), t_checked, t_checked_date)
+	else:
+		i_mtask.init(t_name, t_type, id_counter)
+		i_task.init(t_name, t_type, id_counter, t_checked, t_checked_date)
 	
-	task_manager.add_child(i_mtask)
-	
-	
-	
+	task_box.add_child(i_mtask)
+	i_mtask.get_node("margin_container/hbox/button_edit").connect("pressed", task_manager, "select_task", [i_mtask])
+	i_mtask.get_node("margin_container/hbox/button_delete").connect("pressed", self, "delete_task", [i_mtask])
 	match t_type:
 		Ref.TASK_TYPE.DAILY:
 			daily_tasks.add_child(i_task)
@@ -37,4 +43,19 @@ func create_task(t_name : String, t_type : int):
 			one_time_tasks.add_child(i_task)
 		_:
 			printerr("Invalid Task Type was passed in [%s]" % t_type)
+	tasks.append(i_task)
+	
+	id_counter += 1
+	pass
+
+func edit_task(t_task, new_t_name : String, new_t_type : int):
+	t_task.update_task(new_t_name, new_t_type)
+	pass
+
+func delete_task(mt):
+	for t in tasks:
+		if t.id == mt.id:
+			tasks.erase(t)
+			t.queue_free()
+			mt.queue_free()
 	pass

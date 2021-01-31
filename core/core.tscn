@@ -1,11 +1,24 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://core/core.gd" type="Script" id=1]
 [ext_resource path="res://core/task_manager.gd" type="Script" id=3]
 [ext_resource path="res://core/main.gd" type="Script" id=4]
 
-[sub_resource type="Animation" id=1]
-resource_name = "to_managment"
+[sub_resource type="InputEventAction" id=1]
+action = "ui_accept"
+pressed = true
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[sub_resource type="InputEventAction" id=3]
+action = "ui_cancel"
+pressed = true
+
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
+
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("../task_manager:rect_position")
 tracks/0/interp = 2
@@ -31,8 +44,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, 512 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "to_tasks"
+[sub_resource type="Animation" id=6]
 tracks/0/type = "value"
 tracks/0/path = NodePath("../task_manager:rect_position")
 tracks/0/interp = 1
@@ -79,8 +91,7 @@ __meta__ = {
 [node name="main" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 512.0
-margin_bottom = 511.999
+margin_bottom = -0.000976563
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true,
@@ -120,7 +131,7 @@ text = "Manage Tasks"
 [node name="tab_container" type="TabContainer" parent="main/main_body"]
 margin_top = 40.0
 margin_right = 304.0
-margin_bottom = 464.0
+margin_bottom = 463.0
 rect_min_size = Vector2( 250, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -307,8 +318,8 @@ valign = 1
 anchor_top = -1.06667
 anchor_right = 1.0
 anchor_bottom = -0.0666667
-margin_top = 512.002
-margin_bottom = 512.002
+margin_top = 0.00158691
+margin_bottom = 0.00160217
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true,
@@ -372,6 +383,7 @@ margin_left = 236.0
 margin_right = 268.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
+shortcut = SubResource( 2 )
 text = "C"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -382,6 +394,7 @@ margin_left = 272.0
 margin_right = 304.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
+shortcut = SubResource( 4 )
 text = "X"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -410,7 +423,7 @@ margin_bottom = 90.0
 [node name="task_view" type="Control" parent="task_manager/main_body"]
 margin_top = 94.0
 margin_right = 304.0
-margin_bottom = 440.0
+margin_bottom = 439.0
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": true
@@ -469,13 +482,20 @@ margin_bottom = 20.0
 hint_tooltip = "Sets the filter to show only Monthly Tasks"
 text = "M"
 
-[node name="label_curr_filter" type="Label" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]
+[node name="button_one_time" type="Button" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]
 margin_left = 164.0
+margin_right = 187.0
+margin_bottom = 20.0
+hint_tooltip = "Sets the filter to show only Monthly Tasks"
+text = "O"
+
+[node name="label_current_filter" type="Label" parent="task_manager/main_body/task_view/task_view_body/buttons_filter"]
+margin_left = 191.0
 margin_top = 3.0
 margin_right = 304.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
-text = "Current Filter: {f}"
+text = "Current Filter:"
 align = 2
 valign = 1
 max_lines_visible = 1
@@ -483,7 +503,7 @@ max_lines_visible = 1
 [node name="task_container" type="ScrollContainer" parent="task_manager/main_body/task_view/task_view_body"]
 margin_top = 24.0
 margin_right = 304.0
-margin_bottom = 346.0
+margin_bottom = 345.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -495,9 +515,9 @@ margin_right = 304.0
 size_flags_horizontal = 3
 
 [node name="button_back" type="Button" parent="task_manager/main_body"]
-margin_top = 444.0
+margin_top = 443.0
 margin_right = 304.0
-margin_bottom = 464.0
+margin_bottom = 463.0
 text = "Back"
 __meta__ = {
 "_edit_use_anchors_": true
@@ -512,9 +532,14 @@ __meta__ = {
 }
 
 [node name="animator" type="AnimationPlayer" parent="utils"]
-anims/to_managment = SubResource( 1 )
-anims/to_tasks = SubResource( 2 )
+anims/to_managment = SubResource( 5 )
+anims/to_tasks = SubResource( 6 )
 [connection signal="pressed" from="main/main_body/buttons/button_manage_tasks" to="." method="_on_button_manage_tasks_pressed"]
 [connection signal="button_up" from="task_manager/main_body/task_editing/v_managment_body/h_input_body/button_confirm" to="task_manager" method="_on_button_confirm_button_up"]
 [connection signal="button_down" from="task_manager/main_body/task_editing/v_managment_body/h_input_body/button_cancel" to="task_manager" method="_on_button_cancel_button_down"]
+[connection signal="pressed" from="task_manager/main_body/task_view/task_view_body/buttons_filter/button_all" to="task_manager" method="_on_button_all_pressed"]
+[connection signal="pressed" from="task_manager/main_body/task_view/task_view_body/buttons_filter/button_daily" to="task_manager" method="_on_button_daily_pressed"]
+[connection signal="pressed" from="task_manager/main_body/task_view/task_view_body/buttons_filter/button_weekly" to="task_manager" method="_on_button_weekly_pressed"]
+[connection signal="pressed" from="task_manager/main_body/task_view/task_view_body/buttons_filter/button_monthly" to="task_manager" method="_on_button_monthly_pressed"]
+[connection signal="pressed" from="task_manager/main_body/task_view/task_view_body/buttons_filter/button_one_time" to="task_manager" method="_on_button_one_time_pressed"]
 [connection signal="button_down" from="task_manager/main_body/button_back" to="." method="_on_Button_button_down"]

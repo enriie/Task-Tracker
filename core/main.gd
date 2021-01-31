@@ -1,16 +1,9 @@
 extends Control
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func on_managed_updated():
+	for c in get_node("main_body/tab_container").get_children():
+		if c.get_node("scroll_container/task_box").get_children().size() > 1:
+			c.get_node("scroll_container/task_box/label_no_tasks").visible = false

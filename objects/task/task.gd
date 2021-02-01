@@ -8,9 +8,6 @@ var task_name : String
 var checked : bool
 var checked_date : Dictionary
 
-func _ready():
-	pass
-
 func init(t_name : String, t_type : int, t_id :int, t_checked : bool, t_checked_date : Dictionary):
 	task_name = t_name
 	type = t_type
@@ -26,7 +23,6 @@ func init(t_name : String, t_type : int, t_id :int, t_checked : bool, t_checked_
 		$utils/animator.queue("uncheck")
 	
 	$margin_container/hbox/label_task.text = t_name
-	pass
 
 func update_task(new_name : String, new_type : int):
 	task_name = new_name
@@ -63,5 +59,5 @@ func get_data():
 		"checked" : checked,
 		"checked_date" : checked_date
 	}
-	print(data)
+	
 	return data

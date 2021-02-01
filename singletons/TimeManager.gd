@@ -5,12 +5,16 @@ var timer_update : Timer
 
 func _ready():
 	datetime = OS.get_datetime()
+	
 	timer_update = Timer.new()
-	print(datetime)
 	timer_update.wait_time = Ref.WAIT_TIME
 	timer_update.autostart = true
-	
-	timer_update.connect("timeout", self, "update_datetime")
+	var err = timer_update.connect("timeout", self, "update_datetime")
+	if err == 0:
+		add_child(timer_update)
+		print_debug("Date & Time Timer successfully connected to TimeManager")
+	else:
+		print_debug("Error occured while trying to connect Date & Time Timer with TimeManager")
 
 func update_datetime():
 	datetime = OS.get_datetime()
@@ -55,6 +59,5 @@ func update_datetime():
 	
 	nodes.clear()
 	nodes = null
-	pass
 
 

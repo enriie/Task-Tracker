@@ -15,8 +15,6 @@ func _ready():
 	data = {}
 	
 	file = File.new()
-	
-	pass
 
 func load_data():
 	file = File.new()
@@ -64,7 +62,3 @@ func save_data():
 			if err == 0:
 				file.store_line(to_json(data[t]))
 			file.close()
-	pass
-
-func delete_data():
-	pass

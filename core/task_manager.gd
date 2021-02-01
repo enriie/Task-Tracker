@@ -33,10 +33,14 @@ func _ready():
 	
 	task_options = get_node("main_body/task_editing/v_managment_body/options_task_type")
 	
-	connect("manager_updated", get_node("../main"), "on_managed_updated")
+	var err = connect("manager_updated", get_node("../main"), "on_managed_updated")
+	if err != 0:
+		print_debug("Error occured when trying to connect Task Manager View to Main View.")
+	else:
+		print_debug("Task Manager View successfully connected to Main View.")
+	
 	DataManager.load_data()
 	update_manager()
-	pass
 
 func update_manager():
 	if selected_task == null:
@@ -75,7 +79,6 @@ func select_task(mt):
 	input_body.get_node("task_renaming").text = mt.task_name
 	task_options.selected = mt.type
 	update_manager()
-	pass
 
 func _on_button_confirm_button_up():
 	if get_node("main_body/task_editing/v_managment_body/h_input_body/task_renaming").text.replace(" ", "").length() > 0:
@@ -93,7 +96,6 @@ func _on_button_confirm_button_up():
 			task_options.selected = 0
 			input_body.get_node("task_renaming").clear()
 			update_manager()
-	pass
 
 func _on_button_cancel_button_down():
 	selected_task = null
@@ -101,30 +103,23 @@ func _on_button_cancel_button_down():
 	input_body.get_node("task_renaming").clear()
 	task_options.selected = 0
 	update_manager()
-	pass
-
 
 func _on_button_all_pressed():
 	filter = Ref.MANAGER_FILTERS.ALL
 	update_manager()
-	pass
 
 func _on_button_daily_pressed():
 	filter = Ref.MANAGER_FILTERS.DAILY
 	update_manager()
-	pass
 
 func _on_button_weekly_pressed():
 	filter = Ref.MANAGER_FILTERS.WEEKLY
 	update_manager()
-	pass
 
 func _on_button_monthly_pressed():
 	filter = Ref.MANAGER_FILTERS.MONTHLY
 	update_manager()
-	pass
 
 func _on_button_one_time_pressed():
 	filter = Ref.MANAGER_FILTERS.ONE_TIME
 	update_manager()
-	pass

@@ -15,9 +15,6 @@ var tasks = []
 
 var id_counter = 0
 
-func _ready():
-	pass
-
 func create_task(t_name : String, t_type : int, t_checked : bool, t_checked_date : Dictionary, forced_id = -1, force_id = false):
 	var i_mtask = managment_task.instance()
 	var i_task = task.instance()
@@ -46,7 +43,6 @@ func create_task(t_name : String, t_type : int, t_checked : bool, t_checked_date
 	tasks.append(i_task)
 	
 	id_counter += 1
-	pass
 
 func edit_task(t_mtask, new_t_name : String, new_t_type : int):
 	var t_task = null
@@ -77,4 +73,3 @@ func delete_task(mt):
 			tasks.erase(t)
 			t.queue_free()
 			mt.queue_free()
-	pass

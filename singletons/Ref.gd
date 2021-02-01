@@ -7,4 +7,4 @@ const KEY_TASK_NAME = "task_name"
 const KEY_TASK_CHECKED = "checked"
 const KEY_TASK_CHECKED_DATE = "checked_date"
 
-const WAIT_TIME = 60
+const WAIT_TIME = 600

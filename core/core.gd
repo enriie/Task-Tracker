@@ -9,9 +9,6 @@ var task_manager_ready : bool = false
 var task_manager_box_ready : bool = false
 var core_ready : bool = false
 
-func _ready():
-	pass
-
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		DataManager.save_data()

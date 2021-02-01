@@ -5,9 +5,6 @@ var id : int
 
 var task_name : String
 
-func _ready():
-	pass
-
 func init(t_name : String, t_type : int, t_id : int):
 	task_name = t_name
 	type = t_type
@@ -25,7 +22,6 @@ func init(t_name : String, t_type : int, t_id : int):
 	
 	$margin_container/hbox/label_task.text = t_name
 	$margin_container/hbox/label_type.text = type_letter
-	pass
 
 func update_task(t_name : String, t_type : int):
 	task_name = t_name
@@ -43,4 +39,3 @@ func update_task(t_name : String, t_type : int):
 	
 	$margin_container/hbox/label_task.text = t_name
 	$margin_container/hbox/label_type.text = type_letter
-	

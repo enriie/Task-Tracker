@@ -25,6 +25,7 @@ config/icon="res://tracker_icon_v2.png"
 Ref="*res://singletons/Ref.gd"
 TaskManager="*res://singletons/TaskManager.gd"
 DataManager="*res://singletons/DataManager.gd"
+TimeManager="*res://singletons/TimeManager.gd"
 
 [display]
 

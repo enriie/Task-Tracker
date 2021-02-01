@@ -27,22 +27,21 @@ func load_data():
 			Ref.TASK_TYPE.WEEKLY: path = weekly_save
 			Ref.TASK_TYPE.MONTHLY: path = monthly_save
 			Ref.TASK_TYPE.ONE_TIME: path = one_time_save
-		
-		file.open(path, File.READ)
-		data[t] = parse_json(file.get_as_text())
+		var err = file.open(path, File.READ)
+		if err == 0:
+			data[t] = parse_json(file.get_as_text())
 		file.close()
 	
 	for t in data.keys():
 			if data[t] != null:
 				for ts in data[t].keys():
-					print(data[t][ts][Ref.KEY_TASK_NAME])
 					TaskManager.create_task(data[t][ts][Ref.KEY_TASK_NAME], t, data[t][ts][Ref.KEY_TASK_CHECKED], data[t][ts][Ref.KEY_TASK_CHECKED_DATE], ts, true)
-	pass
+	
+	TimeManager.update_datetime()
 
 func save_data():
 	file = File.new()
 	
-	var save_dict = {}
 	var nodes = get_tree().get_nodes_in_group("has_data")
 	
 	data.clear()
@@ -61,8 +60,9 @@ func save_data():
 			Ref.TASK_TYPE.ONE_TIME: path = one_time_save
 		
 		if data[t] != null and !data.empty():
-			file.open(path, File.WRITE)
-			file.store_line(to_json(data[t]))
+			var err = file.open(path, File.WRITE)
+			if err == 0:
+				file.store_line(to_json(data[t]))
 			file.close()
 	pass
 

@@ -10,7 +10,6 @@ var task_manager_box_ready : bool = false
 var core_ready : bool = false
 
 func _ready():
-	
 	pass
 
 func _notification(what):
@@ -19,9 +18,6 @@ func _notification(what):
 
 func _on_button_manage_tasks_pressed():
 	$utils/animator.queue("to_managment")
-	pass
-
 
 func _on_Button_button_down():
 	$utils/animator.queue("to_tasks")
-	pass

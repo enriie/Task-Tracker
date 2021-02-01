@@ -34,6 +34,19 @@ func update_task(new_name : String, new_type : int):
 	
 	$margin_container/hbox/label_task.text = new_name
 
+func get_datetime():
+	return checked_date
+
+func is_checked():
+	return checked
+
+func uncheck():
+	checked = false
+	checked_date.clear()
+	
+	$margin_container/hbox/check_box.pressed = checked
+	$utils/animator.queue("uncheck")
+
 func _on_check_box_pressed():
 	if $margin_container/hbox/check_box.pressed:
 		$utils/animator.queue("finished")

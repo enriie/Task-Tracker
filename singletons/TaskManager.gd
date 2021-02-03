@@ -3,6 +3,7 @@ extends Node
 const task = preload("res://objects/task/task.res")
 const managment_task = preload("res://objects/task/managment_task.res")
 
+var all_tasks
 var daily_tasks
 var weekly_tasks
 var monthly_tasks
@@ -14,6 +15,10 @@ var task_manager
 var tasks = []
 
 var id_counter = 0
+
+signal task_created
+signal task_edited
+signal task_deleted
 
 func create_task(t_name : String, t_type : int, t_checked : bool, t_checked_date : Dictionary, forced_id = -1, force_id = false):
 	var i_mtask = managment_task.instance()
@@ -43,6 +48,7 @@ func create_task(t_name : String, t_type : int, t_checked : bool, t_checked_date
 	tasks.append(i_task)
 	
 	id_counter += 1
+	emit_signal("task_created")
 
 func edit_task(t_mtask, new_t_name : String, new_t_type : int):
 	var t_task = null
@@ -66,6 +72,7 @@ func edit_task(t_mtask, new_t_name : String, new_t_type : int):
 			one_time_tasks.add_child(t_task)
 		_:
 			printerr("Invalid Task Type was passed in [%s]" % new_t_type)
+	emit_signal("task_edited")
 
 func delete_task(mt):
 	for t in tasks:
@@ -73,3 +80,4 @@ func delete_task(mt):
 			tasks.erase(t)
 			t.queue_free()
 			mt.queue_free()
+	emit_signal("task_deleted")

@@ -16,8 +16,6 @@ var label_wrapper : Control
 var label_selected : Label
 var label_filter  : Label
 
-var wrap_label
-
 func _ready():
 	selected_task = null
 	filter = Ref.MANAGER_FILTERS.ALL
@@ -29,8 +27,6 @@ func _ready():
 	input_body = $main_body/task_editor/h_input_body
 	task_options = $main_body/task_editor/options_task_type
 	
-	wrap_label = false
-	
 	TaskManager.task_box = $main_body/task_view_body/task_container/task_box
 	TaskManager.task_manager = self
 	
@@ -38,19 +34,9 @@ func _ready():
 	update_manager()
 	filter_tasks()
 
-func _process(delta):
-	if !wrap_label:
-		return
-	
-	label_selected.rect_position[0] -= 1
-	if label_selected.rect_position[0] <  -label_selected.rect_size[0] - 4:
-		label_selected.rect_position[0] = label_wrapper.rect_position[0] + (label_wrapper.rect_position[0] * 1.25)
-
 func update_manager():
 	if selected_task == null:
 		label_selected.text = "None"
-	else:
-		label_selected.text = selected_task.task_name
 
 func filter_tasks():
 	match filter:
@@ -76,15 +62,18 @@ func select_task(mt):
 	if selected_task == mt:
 		return
 	
-	wrap_label = false
 	selected_task = mt
 	
+	label_selected.text = " "
+	label_selected._set_size(Vector2(0, 0))
 	label_selected.rect_position[0] = 0
 	
-	input_body.get_node("task_name_input").text = mt.task_name
-	task_options.selected = mt.type
-	label_selected._set_size(Vector2(0, 0))
-	label_selected.text = selected_task.task_name
+	if mt != null:
+		input_body.get_node("task_name_input").text = mt.task_name
+		task_options.selected = mt.type
+		label_selected.text = selected_task.task_name
+	else:
+		label_selected.text = "None"
 	
 	update_manager()
 
@@ -98,13 +87,11 @@ func _on_button_confirm_button_up():
 		else:
 			TaskManager.create_task(input_body.get_node("task_name_input").text, task_options.selected, false, {})
 			input_body.get_node("task_name_input").clear()
-			
-		wrap_label = false
+		
 		update_manager()
 		filter_tasks()
 
 func _on_button_cancel_button_down():
-	wrap_label = false
 	selected_task = null
 	input_body.get_node("task_name_input").clear()
 	
@@ -129,9 +116,3 @@ func _on_button_monthly_pressed():
 func _on_button_one_time_pressed():
 	filter = Ref.MANAGER_FILTERS.ONE_TIME
 	filter_tasks()
-
-
-func _on_label_current_selection_resized():
-	wrap_label = false
-	if $main_body/task_editor/h_box_label/label_wrapper/label_current_selection.rect_size[0] > label_wrapper.rect_size[0] - 32:
-		wrap_label = true

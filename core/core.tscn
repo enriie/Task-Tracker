@@ -140,6 +140,7 @@ __meta__ = {
 }
 
 [node name="All" type="Tabs" parent="main/main_body/tab_container"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -459,7 +460,9 @@ margin_bottom = 14.0
 rect_clip_content = true
 size_flags_horizontal = 3
 
-[node name="label_current_selection" type="Label" parent="task_manager/main_body/task_editor/h_box_label/label_wrapper"]
+[node name="label_current_selection" type="Label" parent="task_manager/main_body/task_editor/h_box_label/label_wrapper" groups=[
+"wrapping_text",
+]]
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 0, 7 )
 size_flags_horizontal = 9
@@ -583,7 +586,6 @@ anims/to_tasks = SubResource( 6 )
 [connection signal="pressed" from="main/main_body/buttons/button_manage_tasks" to="." method="_on_button_manage_tasks_pressed"]
 [connection signal="button_up" from="task_manager/main_body/task_editor/h_input_body/button_confirm" to="task_manager" method="_on_button_confirm_button_up"]
 [connection signal="button_down" from="task_manager/main_body/task_editor/h_input_body/button_cancel" to="task_manager" method="_on_button_cancel_button_down"]
-[connection signal="resized" from="task_manager/main_body/task_editor/h_box_label/label_wrapper/label_current_selection" to="task_manager" method="_on_label_current_selection_resized"]
 [connection signal="pressed" from="task_manager/main_body/task_view_body/buttons_filter/button_all" to="task_manager" method="_on_button_all_pressed"]
 [connection signal="pressed" from="task_manager/main_body/task_view_body/buttons_filter/button_daily" to="task_manager" method="_on_button_daily_pressed"]
 [connection signal="pressed" from="task_manager/main_body/task_view_body/buttons_filter/button_weekly" to="task_manager" method="_on_button_weekly_pressed"]

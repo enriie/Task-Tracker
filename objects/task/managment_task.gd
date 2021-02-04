@@ -5,7 +5,13 @@ var id : int
 
 var task_name : String
 
+var label_name : Label
+var label_type : Label
+
 func init(t_name : String, t_type : int, t_id : int):
+	label_name = $margin_container/hbox/label_wrapper/label_task
+	label_type = $margin_container/hbox/label_type
+	
 	task_name = t_name
 	type = t_type
 	id = t_id
@@ -20,8 +26,8 @@ func init(t_name : String, t_type : int, t_id : int):
 	
 	type_letter.capitalize()
 	
-	$margin_container/hbox/label_task.text = t_name
-	$margin_container/hbox/label_type.text = type_letter
+	label_name.text = t_name
+	label_type.text = type_letter
 
 func update_task(t_name : String, t_type : int):
 	task_name = t_name
@@ -37,5 +43,5 @@ func update_task(t_name : String, t_type : int):
 	
 	type_letter.capitalize()
 	
-	$margin_container/hbox/label_task.text = t_name
-	$margin_container/hbox/label_type.text = type_letter
+	label_name.text = t_name
+	label_type.text = type_letter

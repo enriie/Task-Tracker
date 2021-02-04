@@ -24,7 +24,7 @@ func init(t_name : String, t_type : int, t_id :int, t_checked : bool, t_checked_
 	
 	check_box.pressed = checked
 	if checked:
-		$utils/animator.queue("finished")
+		$utils/animator.queue("check")
 	else:
 		$utils/animator.queue("uncheck")
 	
@@ -42,6 +42,13 @@ func get_datetime():
 func is_checked():
 	return checked
 
+func check():
+	checked = true
+	checked_date = OS.get_datetime()
+	
+	check_box.pressed = true
+	$utils/animator.queue("check")
+
 func uncheck():
 	checked = false
 	checked_date.clear()
@@ -51,13 +58,9 @@ func uncheck():
 
 func _on_check_box_pressed():
 	if check_box.pressed:
-		$utils/animator.queue("finished")
-		checked_date = OS.get_datetime()
-		checked = true
+		check()
 	else:
-		$utils/animator.queue("uncheck")
-		checked_date.clear()
-		checked = false
+		uncheck()
 
 func get_data():
 	var data = {

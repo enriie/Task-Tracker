@@ -36,6 +36,7 @@ func load_data():
 					TaskManager.create_task(data[t][ts][Ref.KEY_TASK_NAME], t, data[t][ts][Ref.KEY_TASK_CHECKED], data[t][ts][Ref.KEY_TASK_CHECKED_DATE], ts, true)
 	
 	TimeManager.update_datetime()
+	TaskManager.wrappable_labels = get_tree().get_nodes_in_group("wrapping_text")
 
 func save_data():
 	file = File.new()

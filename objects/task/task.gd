@@ -25,6 +25,7 @@ func init(t_name : String, t_type : int, t_id :int, t_checked : bool, t_checked_
 	checked = t_checked
 	checked_date = t_checked_date
 	
+	
 	check_box.pressed = checked
 	if checked:
 		$utils/animator.queue("check")

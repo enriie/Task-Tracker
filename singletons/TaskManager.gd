@@ -13,6 +13,7 @@ var task_box
 var task_manager
 
 var tasks = []
+var task_instances = []
 
 var id_counter = 0
 
@@ -67,7 +68,8 @@ func create_task(t_name : String, t_type : int, t_checked : bool, t_checked_date
 			one_time_tasks.add_child(i_task)
 		_:
 			printerr("Invalid Task Type was passed in [%s]" % t_type)
-	tasks.append(i_task)
+	tasks.append(a_task)
+	task_instances.append(i_task)
 	
 	id_counter += 1
 	update_group()
@@ -105,3 +107,14 @@ func delete_task(mt):
 			mt.queue_free()
 	update_group()
 	emit_signal("task_deleted")
+
+func get_tasks_from_id(task_id : int):
+	var ts = []
+	for t in tasks:
+		if t.id == task_id:
+			ts.append(t)
+	
+	for t in task_instances:
+		if t.id == task_id:
+			ts.append(t)
+	return ts

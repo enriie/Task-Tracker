@@ -11,6 +11,8 @@ var checked_date : Dictionary
 var label : Label
 var check_box : CheckBox
 
+var container
+
 func init(t_name : String, t_type : int, t_id :int, t_checked : bool, t_checked_date : Dictionary):
 	task_name = t_name
 	type = t_type
@@ -18,6 +20,7 @@ func init(t_name : String, t_type : int, t_id :int, t_checked : bool, t_checked_
 	
 	label = $margin_container/hbox/label_wrapper/label_task
 	check_box = $margin_container/hbox/check_box
+	container = $margin_container/hbox/label_wrapper
 	
 	checked = t_checked
 	checked_date = t_checked_date
@@ -29,12 +32,15 @@ func init(t_name : String, t_type : int, t_id :int, t_checked : bool, t_checked_
 		$utils/animator.queue("uncheck")
 	
 	label.text = t_name
+	container.mouse_filter = MOUSE_FILTER_PASS
+	container.hint_tooltip = t_name
 
 func update_task(new_name : String, new_type : int):
 	task_name = new_name
 	type = new_type
 	
 	label.text = new_name
+	container.hint_tooltip = new_name
 
 func get_datetime():
 	return checked_date
@@ -57,10 +63,18 @@ func uncheck():
 	$utils/animator.queue("uncheck")
 
 func _on_check_box_pressed():
+	var tasks = []
+	tasks = TaskManager.get_tasks_from_id(id)
+	if tasks.empty():
+		printerr("Task with ID:[%s] was not found.")
+		return
+	
 	if check_box.pressed:
-		check()
+		for t in tasks:
+			t.check()
 	else:
-		uncheck()
+		for t in tasks:
+			t.uncheck()
 
 func get_data():
 	var data = {

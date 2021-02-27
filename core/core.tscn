@@ -140,7 +140,6 @@ __meta__ = {
 }
 
 [node name="All" type="Tabs" parent="main/main_body/tab_container"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0

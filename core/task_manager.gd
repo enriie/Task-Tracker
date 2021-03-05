@@ -12,53 +12,44 @@ var task_view_body
 var filter
 var filter_updated : bool
 
-signal manager_updated
+var label_wrapper : Control
+var label_selected : Label
+var label_filter  : Label
 
 func _ready():
 	selected_task = null
 	filter = Ref.MANAGER_FILTERS.ALL
 	
-	TaskManager.daily_tasks = get_node("../main/main_body/tab_container/Daily/scroll_container/task_box")
-	TaskManager.weekly_tasks = get_node("../main/main_body/tab_container/Weekly/scroll_container/task_box")
-	TaskManager.monthly_tasks = get_node("../main/main_body/tab_container/Monthly/scroll_container/task_box")
-	TaskManager.one_time_tasks = get_node("../main/main_body/tab_container/One Time/scroll_container/task_box")
+	label_selected = $main_body/task_editor/h_box_label/label_wrapper/label_current_selection
+	label_wrapper = $main_body/task_editor/h_box_label/label_wrapper
+	label_filter = $main_body/task_view_body/buttons_filter/label_current_filter
 	
-	TaskManager.task_box = get_node("main_body/task_view/task_view_body/task_container/task_box")
+	input_body = $main_body/task_editor/h_input_body
+	task_options = $main_body/task_editor/options_task_type
+	
+	TaskManager.task_box = $main_body/task_view_body/task_container/task_box
 	TaskManager.task_manager = self
-
-	main_body = get_node("main_body")
-	input_body = get_node("main_body/task_editing/v_managment_body/h_input_body")
-	
-	task_view_body = get_node("main_body/task_view/task_view_body")
-	
-	task_options = get_node("main_body/task_editing/v_managment_body/options_task_type")
-	
-	var err = connect("manager_updated", get_node("../main"), "on_managed_updated")
-	if err != 0:
-		print_debug("Error occured when trying to connect Task Manager View to Main View.")
-	else:
-		print_debug("Task Manager View successfully connected to Main View.")
 	
 	DataManager.load_data()
 	update_manager()
+	filter_tasks()
 
 func update_manager():
 	if selected_task == null:
-		$main_body/label_current_selection.text = "No task has been selected"
-	else:
-		$main_body/label_current_selection.text = label_selection_text % [selected_task.task_name]
-	
+		label_selected.text = "None"
+
+func filter_tasks():
 	match filter:
 		Ref.MANAGER_FILTERS.ALL:
-			$main_body/task_view/task_view_body/buttons_filter/label_current_filter.text = label_filter_text % "All"
+			label_filter.text = label_filter_text % "All"
 		Ref.MANAGER_FILTERS.DAILY:
-			$main_body/task_view/task_view_body/buttons_filter/label_current_filter.text = label_filter_text % "D"
+			label_filter.text = label_filter_text % "D"
 		Ref.MANAGER_FILTERS.WEEKLY:
-			$main_body/task_view/task_view_body/buttons_filter/label_current_filter.text = label_filter_text % "W"
+			label_filter.text = label_filter_text % "W"
 		Ref.MANAGER_FILTERS.MONTHLY:
-			$main_body/task_view/task_view_body/buttons_filter/label_current_filter.text = label_filter_text % "M"
+			label_filter.text = label_filter_text % "M"
 		Ref.MANAGER_FILTERS.ONE_TIME:
-			$main_body/task_view/task_view_body/buttons_filter/label_current_filter.text = label_filter_text % "O"
+			label_filter.text = label_filter_text % "O"
 		_: printerr("Incorrect filter was selected! Filter:[%s]" % filter)
 	
 	for t in TaskManager.task_box.get_children():
@@ -66,60 +57,62 @@ func update_manager():
 		if filter != Ref.MANAGER_FILTERS.ALL:
 			if t.type != filter - 1:
 				t.visible = false
-	emit_signal("manager_updated")
-
-func is_task_selected():
-	if selected_task == null:
-		return false
-	return true
 
 func select_task(mt):
+	if selected_task == mt:
+		return
+	
 	selected_task = mt
 	
-	input_body.get_node("task_renaming").text = mt.task_name
-	task_options.selected = mt.type
+	label_selected.text = " "
+	label_selected._set_size(Vector2(0, 0))
+	label_selected.rect_position[0] = 0
+	
+	if mt != null:
+		input_body.get_node("task_name_input").text = mt.task_name
+		task_options.selected = mt.type
+		label_selected.text = selected_task.task_name
+	else:
+		label_selected.text = "None"
+	
 	update_manager()
 
 func _on_button_confirm_button_up():
-	if get_node("main_body/task_editing/v_managment_body/h_input_body/task_renaming").text.replace(" ", "").length() > 0:
-		if is_task_selected():
-			TaskManager.edit_task(selected_task, input_body.get_node("task_renaming").text, task_options.selected)
+	if input_body.get_node("task_name_input").text.replace(" ", "").length() > 0:
+		if selected_task != null:
+			TaskManager.edit_task(selected_task, input_body.get_node("task_name_input").text, task_options.selected)
 			
-			task_options.selected = 0
-			input_body.get_node("task_renaming").clear()
-			
+			input_body.get_node("task_name_input").clear()
 			selected_task = null
-			update_manager()
 		else:
-			TaskManager.create_task(input_body.get_node("task_renaming").text, task_options.selected, false, {})
-			
-			task_options.selected = 0
-			input_body.get_node("task_renaming").clear()
-			update_manager()
+			TaskManager.create_task(input_body.get_node("task_name_input").text, task_options.selected, false, {})
+			input_body.get_node("task_name_input").clear()
+		
+		update_manager()
+		filter_tasks()
 
 func _on_button_cancel_button_down():
 	selected_task = null
+	input_body.get_node("task_name_input").clear()
 	
-	input_body.get_node("task_renaming").clear()
-	task_options.selected = 0
 	update_manager()
 
 func _on_button_all_pressed():
 	filter = Ref.MANAGER_FILTERS.ALL
-	update_manager()
+	filter_tasks()
 
 func _on_button_daily_pressed():
 	filter = Ref.MANAGER_FILTERS.DAILY
-	update_manager()
+	filter_tasks()
 
 func _on_button_weekly_pressed():
 	filter = Ref.MANAGER_FILTERS.WEEKLY
-	update_manager()
+	filter_tasks()
 
 func _on_button_monthly_pressed():
 	filter = Ref.MANAGER_FILTERS.MONTHLY
-	update_manager()
+	filter_tasks()
 
 func _on_button_one_time_pressed():
 	filter = Ref.MANAGER_FILTERS.ONE_TIME
-	update_manager()
+	filter_tasks()

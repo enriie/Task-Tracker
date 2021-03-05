@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "",
+"class": "GitAPI",
+"language": "NativeScript",
+"path": "res://git_api.gdns"
+} ]
 _global_script_class_icons={
-
+"GitAPI": ""
 }
 
 [application]
@@ -18,7 +23,6 @@ _global_script_class_icons={
 config/name="Task Tracker"
 run/main_scene="res://core/core.tscn"
 boot_splash/bg_color=Color( 0.117647, 0.109804, 0.141176, 1 )
-config/icon="res://tracker_icon_v2.png"
 
 [autoload]
 
@@ -26,6 +30,7 @@ Ref="*res://singletons/Ref.gd"
 TaskManager="*res://singletons/TaskManager.gd"
 DataManager="*res://singletons/DataManager.gd"
 TimeManager="*res://singletons/TimeManager.gd"
+PointsManager="*res://singletons/PointsManager.gd"
 
 [display]
 
@@ -35,6 +40,10 @@ window/size/resizable=false
 window/handheld/orientation="portrait"
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[gdnative]
+
+singletons=[ "res://git_api.gdnlib" ]
 
 [input]
 

@@ -23,7 +23,6 @@ _global_script_class_icons={
 config/name="Task Tracker"
 run/main_scene="res://core/core.tscn"
 boot_splash/bg_color=Color( 0.117647, 0.109804, 0.141176, 1 )
-config/icon="res://tracker_icon_v2.png"
 
 [autoload]
 
@@ -31,6 +30,7 @@ Ref="*res://singletons/Ref.gd"
 TaskManager="*res://singletons/TaskManager.gd"
 DataManager="*res://singletons/DataManager.gd"
 TimeManager="*res://singletons/TimeManager.gd"
+PointsManager="*res://singletons/PointsManager.gd"
 
 [display]
 

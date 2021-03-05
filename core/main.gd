@@ -8,6 +8,9 @@ func _ready():
 	TaskManager.monthly_tasks = $main_body/tab_container/Monthly/scroll_container/task_box
 	TaskManager.one_time_tasks = $"main_body/tab_container/One Time/scroll_container/task_box"
 	
+	PointsManager.points_label = $main_body/hbox_points/label_points
+	PointsManager.update_points()
+	
 	var err
 	err = TaskManager.connect("task_created", self, "update_tabs")
 	if err == 0:

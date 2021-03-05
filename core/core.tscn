@@ -104,7 +104,7 @@ anchor_left = 0.025
 anchor_top = 0.0166667
 anchor_right = 0.975
 anchor_bottom = 0.983335
-size_flags_horizontal = 3
+size_flags_horizontal = 0
 size_flags_vertical = 3
 custom_constants/separation = 8
 __meta__ = {
@@ -121,17 +121,29 @@ __meta__ = {
 }
 
 [node name="button_manage_tasks" type="Button" parent="main/main_body/buttons"]
-margin_right = 304.0
+margin_right = 230.0
 margin_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 text = "Manage Tasks"
 
+[node name="button_point_history" type="Button" parent="main/main_body/buttons"]
+margin_left = 234.0
+margin_right = 264.0
+margin_bottom = 32.0
+text = "PH"
+
+[node name="button_settings" type="Button" parent="main/main_body/buttons"]
+margin_left = 268.0
+margin_right = 304.0
+margin_bottom = 32.0
+text = "Set."
+
 [node name="tab_container" type="TabContainer" parent="main/main_body"]
 margin_top = 40.0
 margin_right = 304.0
-margin_bottom = 463.0
+margin_bottom = 431.0
 rect_min_size = Vector2( 250, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -357,6 +369,22 @@ margin_bottom = 14.0
 text = "There are no tasks"
 align = 1
 valign = 1
+
+[node name="hbox_points" type="HBoxContainer" parent="main/main_body"]
+margin_top = 439.0
+margin_right = 304.0
+margin_bottom = 463.0
+rect_min_size = Vector2( 0, 24 )
+
+[node name="label_points" type="Label" parent="main/main_body/hbox_points"]
+margin_right = 304.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Points: xD / yW / zM | All Time: xyz"
+valign = 1
+clip_text = true
+max_lines_visible = 1
 
 [node name="task_manager" type="Control" parent="."]
 anchor_top = -1.06667

@@ -36,6 +36,7 @@ func load_data():
 	
 	path = points_save
 	var err = file.open(path, File.READ)
+	data[DATA_KEY_POINTS] = {}
 	if err == 0:
 		data[DATA_KEY_POINTS] = parse_json(file.get_as_text())
 	file.close()

@@ -121,7 +121,7 @@ __meta__ = {
 }
 
 [node name="button_manage_tasks" type="Button" parent="main/main_body/buttons"]
-margin_right = 230.0
+margin_right = 304.0
 margin_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -129,12 +129,14 @@ size_flags_horizontal = 3
 text = "Manage Tasks"
 
 [node name="button_point_history" type="Button" parent="main/main_body/buttons"]
-margin_left = 234.0
-margin_right = 264.0
+visible = false
+margin_left = 274.0
+margin_right = 304.0
 margin_bottom = 32.0
 text = "PH"
 
 [node name="button_settings" type="Button" parent="main/main_body/buttons"]
+visible = false
 margin_left = 268.0
 margin_right = 304.0
 margin_bottom = 32.0
@@ -442,6 +444,7 @@ margin_left = 236.0
 margin_right = 268.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
+shortcut_in_tooltip = false
 shortcut = SubResource( 2 )
 text = "C"
 __meta__ = {
@@ -453,6 +456,7 @@ margin_left = 272.0
 margin_right = 304.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
+shortcut_in_tooltip = false
 shortcut = SubResource( 4 )
 text = "X"
 __meta__ = {

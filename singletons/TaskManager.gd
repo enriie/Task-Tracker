@@ -23,12 +23,14 @@ signal task_deleted
 
 var wrappable_labels : Array = []
 
+var wrapping_speed = 0.6
+
 func _process(delta):
 	update_group()
 	for l in wrappable_labels:
 		l.rect_size[0] = 0
 		if l.rect_size[0] > l.get_parent().rect_size[0]:
-			l.rect_position[0] -= 0.5
+			l.rect_position[0] -= wrapping_speed
 			if l.rect_position[0] <  -l.rect_size[0] - 4:
 				l.rect_position[0] = l.get_parent().rect_size[0] * 1.25
 		else:
@@ -68,21 +70,30 @@ func create_task(t_name : String, t_type : int, t_checked : bool, t_checked_date
 			one_time_tasks.add_child(i_task)
 		_:
 			printerr("Invalid Task Type was passed in [%s]" % t_type)
-	tasks.append(a_task)
-	task_instances.append(i_task)
+	tasks.append(i_task)
+	task_instances.append(a_task)
 	
 	id_counter += 1
 	update_group()
 	emit_signal("task_created")
 
 func edit_task(t_mtask, new_t_name : String, new_t_type : int):
-	var t_task = null
-	for t in tasks:
+	var t_task = null 			# Task
+	var a_task = null 			# All Tab Task
+	for t in tasks:				# Tasks Array Query
 		if t.id == t_mtask.id:
 			t_task = t
 	
+	for at in task_instances:	# All Tab Tasks Query
+		if at.id == t_mtask.id:
+			a_task = at
+	
 	t_mtask.update_task(new_t_name, new_t_type)
-	t_task.update_task(new_t_name, new_t_type)
+	if a_task != null:
+		a_task.update_task(new_t_name, new_t_type)
+	
+	if t_task != null:
+		t_task.update_task(new_t_name, new_t_type)
 	
 	var parent = t_task.get_parent()
 	parent.remove_child(t_task)
@@ -102,9 +113,14 @@ func edit_task(t_mtask, new_t_name : String, new_t_type : int):
 func delete_task(mt):
 	for t in tasks:
 		if t.id == mt.id:
-			tasks.erase(t)
-			t.queue_free()
-			mt.queue_free()
+			var tab_task = null
+			for tt in task_instances:
+				if tt.id == mt.id:
+					tab_task = tt
+			
+			t.queue_free()				# Queues Delete Task
+			tab_task.queue_free()		# Queues Delete Task in All Tab
+			mt.queue_free()				# Deletes Task in Manager View
 	update_group()
 	emit_signal("task_deleted")
 
